@@ -1,0 +1,58 @@
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Python Cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# ==========================
+# VS Code / IDE
+# ==========================
+.vscode/
+.idea/
+
+# ==========================
+# Node.js / React
+# ==========================
+node_modules/
+dist/
+build/
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Docker
+# ==========================
+*.pid
+
+# ==========================
+# Temporary Files
+# ==========================
+*.tmp
+*.temp
