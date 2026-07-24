@@ -78,3 +78,155 @@ Current engineering workflows lack mechanisms to answer questions such as:
 PromptGuard provides engineering teams with objective answers through automated evaluation, historical comparisons, quality scoring, and deployment gates.
 
 Instead of relying on manual testing or user feedback, developers gain immediate visibility into the impact of every prompt or model change before deployment.
+
+---
+
+# 5. Product Goals
+
+PromptGuard is designed with a clear set of product goals that define what success looks like for both developers and organizations using the platform.
+
+## Primary Goals
+
+### 1. Prevent AI Quality Regressions
+
+Detect changes in model behavior before they reach production by automatically replaying historical prompts and evaluating responses.
+
+### 2. Standardize LLM Evaluation
+
+Provide a consistent and repeatable evaluation framework that combines deterministic rules, semantic similarity, and LLM-based judgment to measure response quality.
+
+### 3. Integrate with Developer Workflows
+
+Fit naturally into existing software engineering pipelines by integrating with CI/CD platforms, enabling automated deployment gates based on configurable quality thresholds.
+
+### 4. Improve AI Observability
+
+Give engineering teams complete visibility into prompt history, model performance, latency, token usage, evaluation trends, and deployment outcomes.
+
+### 5. Reduce Production Risk
+
+Enable teams to confidently deploy prompt and model updates while minimizing customer-facing failures caused by regressions.
+
+---
+
+## Secondary Goals
+
+- Reduce manual prompt testing.
+- Track quality improvements over time.
+- Compare multiple LLM providers using identical datasets.
+- Improve collaboration between AI engineers and product teams.
+- Create reusable benchmark datasets from production traffic.
+
+---
+
+## Business Goals
+
+Although PromptGuard begins as an engineering-focused platform, its long-term business objectives include:
+
+- Becoming the default quality assurance platform for LLM applications.
+- Supporting organizations ranging from startups to enterprise teams.
+- Providing extensible APIs for integration into external AI platforms.
+- Establishing PromptGuard as an open-source project with optional enterprise capabilities.
+
+---
+
+# 6. Non-Goals
+
+To maintain focus during Version 1 development, several capabilities are intentionally excluded.
+
+PromptGuard is **not** intended to:
+
+- Replace existing observability platforms.
+- Fine-tune language models.
+- Train custom foundation models.
+- Function as a chatbot framework.
+- Build Retrieval-Augmented Generation (RAG) pipelines.
+- Replace vector databases.
+- Replace workflow orchestration tools.
+- Automatically rewrite prompts.
+- Automatically fix regressions without developer approval.
+
+These capabilities may be explored in future releases but are outside the scope of PromptGuard Version 1.
+
+---
+
+# 7. Target Audience
+
+PromptGuard is built primarily for engineering teams responsible for deploying and maintaining AI-powered software.
+
+## Primary Users
+
+- AI Engineers
+- Machine Learning Engineers
+- LLM Application Developers
+- Platform Engineers
+- DevOps Engineers working with AI systems
+
+## Secondary Users
+
+- Product Managers
+- QA Engineers
+- Technical Leads
+- Startup Founders building AI products
+
+## Organizations
+
+PromptGuard is intended for:
+
+- AI startups
+- SaaS companies
+- Enterprise AI teams
+- Research organizations
+- Internal AI platform teams
+
+---
+
+# 8. User Personas
+
+## Persona 1 — AI Engineer
+
+**Name:** Alex
+
+### Goals
+
+- Deploy prompt improvements safely.
+- Compare multiple model versions.
+- Detect regressions automatically.
+
+### Pain Points
+
+- Manual prompt testing.
+- Inconsistent evaluation.
+- No deployment confidence.
+
+---
+
+## Persona 2 — Platform Engineer
+
+**Name:** Sarah
+
+### Goals
+
+- Integrate AI testing into CI/CD.
+- Prevent unstable deployments.
+
+### Pain Points
+
+- Existing CI pipelines cannot validate AI quality.
+- Difficult to monitor production prompt changes.
+
+---
+
+## Persona 3 — Product Manager
+
+**Name:** David
+
+### Goals
+
+- Measure improvements after prompt updates.
+- Understand customer impact.
+
+### Pain Points
+
+- No objective quality metrics.
+- Decisions based on anecdotal feedback.
