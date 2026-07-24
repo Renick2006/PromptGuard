@@ -1,17 +1,20 @@
 from fastapi import FastAPI
 
+from app.core.config import settings
+
 app = FastAPI(
-    title="PromptGuard API",
+    title=settings.APP_NAME,
     description="CI/CD platform for LLM evaluation, prompt testing, and observability.",
-    version="1.0.0",
+    version=settings.APP_VERSION,
 )
 
 
 @app.get("/")
 async def root():
     return {
-        "message": "Welcome to PromptGuard 🚀",
-        "version": "1.0.0",
+        "app": settings.APP_NAME,
+        "version": settings.APP_VERSION,
+        "environment": settings.APP_ENV,
         "status": "running",
     }
 
