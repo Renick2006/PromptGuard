@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.logging import logger
 
@@ -20,22 +21,7 @@ async def shutdown():
     logger.info(f"{settings.APP_NAME} is shutting down...")
 
 
-@app.get("/")
-async def root():
-    logger.info("Root endpoint accessed")
-
-    return {
-        "app": settings.APP_NAME,
-        "version": settings.APP_VERSION,
-        "environment": settings.APP_ENV,
-        "status": "running",
-    }
-
-
-@app.get("/health")
-async def health():
-    logger.info("Health endpoint accessed")
-
-    return {
-        "status": "healthy"
-    }
+app.include_router(
+    api_router,
+    prefix=settings.API_V1_PREFIX,
+)
