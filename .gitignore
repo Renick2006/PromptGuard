@@ -5,40 +5,63 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Compiled extensions
+*.so
+
+# ==========================
 # Virtual Environments
+# ==========================
 .venv/
 venv/
 env/
 ENV/
 
+# ==========================
 # Environment Variables
+# ==========================
 .env
 .env.*
 !.env.example
 
-# Python Cache
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-
-# Logs
-*.log
-logs/
-
 # ==========================
-# VS Code / IDE
+# IDEs
 # ==========================
 .vscode/
 .idea/
 
 # ==========================
-# Node.js / React
+# Logs
 # ==========================
-node_modules/
-dist/
+logs/
+*.log
+
+# ==========================
+# Testing
+# ==========================
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ==========================
+# Type Checking
+# ==========================
+.mypy_cache/
+.pyre/
+.ruff_cache/
+
+# ==========================
+# Jupyter
+# ==========================
+.ipynb_checkpoints/
+
+# ==========================
+# Build & Distribution
+# ==========================
 build/
+dist/
+*.egg-info/
+.eggs/
 
 # ==========================
 # OS Files
@@ -47,12 +70,24 @@ build/
 Thumbs.db
 
 # ==========================
-# Docker
+# MongoDB
 # ==========================
-*.pid
+*.wt
+*.lock
+
+# ==========================
+# Redis
+# ==========================
+dump.rdb
 
 # ==========================
 # Temporary Files
 # ==========================
 *.tmp
-*.temp
+*.bak
+*.swp
+
+# ==========================
+# Secrets
+# ==========================
+secrets/
