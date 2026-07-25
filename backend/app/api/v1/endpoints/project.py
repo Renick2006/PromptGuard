@@ -6,6 +6,7 @@ from app.schemas.project import (
     ProjectUpdate,
 )
 from app.services.project_service import ProjectService
+from app.utils.mongo import serialize_mongo
 
 router = APIRouter(
     prefix="/projects",
@@ -34,12 +35,7 @@ async def get_projects(
     current_user=Depends(get_current_user),
 ):
     projects = await ProjectService.get_projects(current_user)
-
-    for project in projects:
-        project["id"] = str(project["_id"])
-        del project["_id"]
-
-    return projects
+    return serialize_mongo(projects)
 
 
 @router.get("/{project_id}")
@@ -61,10 +57,7 @@ async def get_project(
             detail="Access denied.",
         )
 
-    project["id"] = str(project["_id"])
-    del project["_id"]
-
-    return project
+    return serialize_mongo(project)
 
 
 @router.patch("/{project_id}")
