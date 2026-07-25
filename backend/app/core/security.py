@@ -69,9 +69,10 @@ def create_refresh_token(subject: str | Any) -> str:
     )
 
 
-def decode_token(token: str) -> dict:
+def decode_token(token: str) -> dict | None:
     """
     Decode and validate a JWT.
+    Returns the payload if valid, otherwise None.
     """
     try:
         payload = jwt.decode(
@@ -82,4 +83,4 @@ def decode_token(token: str) -> dict:
         return payload
 
     except JWTError:
-        raise ValueError("Invalid or expired token")
+        return None

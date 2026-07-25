@@ -6,7 +6,7 @@ from app.core.security import (
 )
 
 from app.repositories.user_repository import UserRepository
-from app.schemas.user import UserCreate, UserLogin
+from app.schemas.user import UserCreate
 
 
 class AuthService:
@@ -49,20 +49,18 @@ class AuthService:
         }
 
     @staticmethod
-    async def login(user_data: UserLogin):
+    async def login(email: str, password: str):
         """
         Authenticate user and return JWT tokens.
         """
 
-        user = await UserRepository.get_by_email(
-            user_data.email
-        )
+        user = await UserRepository.get_by_email(email)
 
         if not user:
             raise ValueError("Invalid email or password.")
 
         if not verify_password(
-            user_data.password,
+            password,
             user["password"],
         ):
             raise ValueError("Invalid email or password.")
