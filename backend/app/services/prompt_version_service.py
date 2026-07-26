@@ -26,9 +26,16 @@ class PromptVersionService:
 
     @staticmethod
     async def get_version(prompt_id: str, version: int):
-        version_data = await PromptVersionRepository.get_version(prompt_id, version)
+        version_data = await PromptVersionRepository.get_version(
+            prompt_id,
+            version,
+        )
 
         if not version_data:
             return None
 
         return serialize_mongo(version_data)
+
+    @staticmethod
+    async def delete_versions(prompt_id: str):
+        await PromptVersionRepository.delete_versions(prompt_id)

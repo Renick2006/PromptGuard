@@ -45,25 +45,18 @@ class PromptService:
         prompt_id: str,
         update_data,
     ):
-        # Fetch current prompt
         prompt = await PromptRepository.get_prompt_by_id(prompt_id)
 
         if not prompt:
             raise ValueError("Prompt not found")
 
-        # Save current version
         await PromptVersionService.create_version(prompt)
 
-        # Prepare update
         data = update_data.model_dump(exclude_unset=True)
 
-        # Increment version
         data["version"] = prompt["version"] + 1
-
-        # Update timestamp
         data["updated_at"] = datetime.utcnow()
 
-        # Update prompt
         await PromptRepository.update_prompt(
             prompt_id,
             data,
@@ -74,13 +67,11 @@ class PromptService:
         prompt_id: str,
         version: int,
     ):
-        # Get current prompt
         current_prompt = await PromptRepository.get_prompt_by_id(prompt_id)
 
         if not current_prompt:
             raise ValueError("Prompt not found")
 
-        # Get requested version
         version_data = await PromptVersionService.get_version(
             prompt_id,
             version,
@@ -89,7 +80,6 @@ class PromptService:
         if not version_data:
             raise ValueError("Version not found")
 
-        # Save current prompt before restoring
         await PromptVersionService.create_version(current_prompt)
 
         update_data = {
@@ -107,4 +97,8 @@ class PromptService:
 
     @staticmethod
     async def delete_prompt(prompt_id: str):
+        # Delete all saved versions first
+        await PromptVersionService.delete_versions(prompt_id)
+
+        # Delete the prompt
         await PromptRepository.delete_prompt(prompt_id)

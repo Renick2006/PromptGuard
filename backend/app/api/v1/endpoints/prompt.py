@@ -45,18 +45,44 @@ async def create_prompt(
 
 
 @router.get("/project/{project_id}")
-async def get_prompts(project_id: str):
+async def get_prompts(
+    project_id: str,
+    current_user=Depends(get_current_user),
+):
+    project = await ProjectService.get_project(project_id)
+
+    if not project:
+        raise HTTPException(
+            status_code=404,
+            detail="Project not found.",
+        )
+
+    if str(project["owner_id"]) != str(current_user["_id"]):
+        raise HTTPException(
+            status_code=403,
+            detail="You do not own this project.",
+        )
+
     return await PromptService.get_prompts(project_id)
 
 
 @router.get("/{prompt_id}")
-async def get_prompt(prompt_id: str):
+async def get_prompt(
+    prompt_id: str,
+    current_user=Depends(get_current_user),
+):
     prompt = await PromptService.get_prompt(prompt_id)
 
     if not prompt:
         raise HTTPException(
             status_code=404,
             detail="Prompt not found.",
+        )
+
+    if str(prompt["owner_id"]) != str(current_user["_id"]):
+        raise HTTPException(
+            status_code=403,
+            detail="You do not own this prompt.",
         )
 
     return prompt
@@ -66,7 +92,22 @@ async def get_prompt(prompt_id: str):
 async def update_prompt(
     prompt_id: str,
     update_data: PromptUpdate,
+    current_user=Depends(get_current_user),
 ):
+    prompt = await PromptService.get_prompt(prompt_id)
+
+    if not prompt:
+        raise HTTPException(
+            status_code=404,
+            detail="Prompt not found.",
+        )
+
+    if str(prompt["owner_id"]) != str(current_user["_id"]):
+        raise HTTPException(
+            status_code=403,
+            detail="You do not own this prompt.",
+        )
+
     await PromptService.update_prompt(
         prompt_id,
         update_data,
@@ -81,7 +122,22 @@ async def update_prompt(
 async def restore_prompt_version(
     prompt_id: str,
     version: int,
+    current_user=Depends(get_current_user),
 ):
+    prompt = await PromptService.get_prompt(prompt_id)
+
+    if not prompt:
+        raise HTTPException(
+            status_code=404,
+            detail="Prompt not found.",
+        )
+
+    if str(prompt["owner_id"]) != str(current_user["_id"]):
+        raise HTTPException(
+            status_code=403,
+            detail="You do not own this prompt.",
+        )
+
     await PromptService.restore_version(
         prompt_id,
         version,
@@ -93,7 +149,24 @@ async def restore_prompt_version(
 
 
 @router.delete("/{prompt_id}")
-async def delete_prompt(prompt_id: str):
+async def delete_prompt(
+    prompt_id: str,
+    current_user=Depends(get_current_user),
+):
+    prompt = await PromptService.get_prompt(prompt_id)
+
+    if not prompt:
+        raise HTTPException(
+            status_code=404,
+            detail="Prompt not found.",
+        )
+
+    if str(prompt["owner_id"]) != str(current_user["_id"]):
+        raise HTTPException(
+            status_code=403,
+            detail="You do not own this prompt.",
+        )
+
     await PromptService.delete_prompt(prompt_id)
 
     return {

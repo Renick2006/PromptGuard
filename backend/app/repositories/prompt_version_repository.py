@@ -12,11 +12,12 @@ class PromptVersionRepository:
 
     @staticmethod
     async def get_versions(prompt_id: str):
-        versions = await prompt_versions_collection().find(
-            {"prompt_id": ObjectId(prompt_id)}
-        ).sort("version", 1).to_list(length=None)
-
-        return versions
+        return (
+            await prompt_versions_collection()
+            .find({"prompt_id": ObjectId(prompt_id)})
+            .sort("version", 1)
+            .to_list(length=None)
+        )
 
     @staticmethod
     async def get_version(prompt_id: str, version: int):
