@@ -3,6 +3,7 @@ from datetime import datetime
 
 from app.repositories.prompt_repository import PromptRepository
 from app.services.prompt_version_service import PromptVersionService
+from app.utils.mongo import serialize_mongo
 
 
 class PromptService:
@@ -27,27 +28,33 @@ class PromptService:
 
     @staticmethod
     async def get_prompts(project_id: str):
-        return await PromptRepository.get_prompts_by_project(project_id)
+        prompts = await PromptRepository.get_prompts_by_project(project_id)
+        return serialize_mongo(prompts)
 
     @staticmethod
     async def get_prompt(prompt_id: str):
-        return await PromptRepository.get_prompt_by_id(prompt_id)
+        prompt = await PromptRepository.get_prompt_by_id(prompt_id)
+
+        if not prompt:
+            return None
+
+        return serialize_mongo(prompt)
 
     @staticmethod
     async def update_prompt(
         prompt_id: str,
         update_data,
     ):
-        # Fetch the current prompt
+        # Fetch current prompt
         prompt = await PromptRepository.get_prompt_by_id(prompt_id)
 
         if not prompt:
             raise ValueError("Prompt not found")
 
-        # Save the current prompt as a version
+        # Save current version
         await PromptVersionService.create_version(prompt)
 
-        # Prepare updated fields
+        # Prepare update
         data = update_data.model_dump(exclude_unset=True)
 
         # Increment version
@@ -56,10 +63,46 @@ class PromptService:
         # Update timestamp
         data["updated_at"] = datetime.utcnow()
 
-        # Update the live prompt
+        # Update prompt
         await PromptRepository.update_prompt(
             prompt_id,
             data,
+        )
+
+    @staticmethod
+    async def restore_version(
+        prompt_id: str,
+        version: int,
+    ):
+        # Get current prompt
+        current_prompt = await PromptRepository.get_prompt_by_id(prompt_id)
+
+        if not current_prompt:
+            raise ValueError("Prompt not found")
+
+        # Get requested version
+        version_data = await PromptVersionService.get_version(
+            prompt_id,
+            version,
+        )
+
+        if not version_data:
+            raise ValueError("Version not found")
+
+        # Save current prompt before restoring
+        await PromptVersionService.create_version(current_prompt)
+
+        update_data = {
+            "title": version_data["title"],
+            "content": version_data["content"],
+            "description": version_data.get("description"),
+            "version": current_prompt["version"] + 1,
+            "updated_at": datetime.utcnow(),
+        }
+
+        await PromptRepository.update_prompt(
+            prompt_id,
+            update_data,
         )
 
     @staticmethod

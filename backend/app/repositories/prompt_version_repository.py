@@ -23,6 +23,12 @@ class PromptVersionRepository:
         return await prompt_versions_collection().find_one(
             {
                 "prompt_id": ObjectId(prompt_id),
-                "version": version
+                "version": version,
             }
+        )
+
+    @staticmethod
+    async def delete_versions(prompt_id: str):
+        await prompt_versions_collection().delete_many(
+            {"prompt_id": ObjectId(prompt_id)}
         )
