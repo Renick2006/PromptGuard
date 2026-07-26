@@ -11,3 +11,7 @@ def projects_collection():
 
 def prompts_collection():
     return mongodb.db["prompts"]
+
+
+def prompt_versions_collection():
+    return mongodb.db["prompt_versions"]

@@ -2,6 +2,7 @@ from bson import ObjectId
 from datetime import datetime
 
 from app.repositories.prompt_repository import PromptRepository
+from app.services.prompt_version_service import PromptVersionService
 
 
 class PromptService:
@@ -37,8 +38,25 @@ class PromptService:
         prompt_id: str,
         update_data,
     ):
+        # Fetch the current prompt
+        prompt = await PromptRepository.get_prompt_by_id(prompt_id)
+
+        if not prompt:
+            raise ValueError("Prompt not found")
+
+        # Save the current prompt as a version
+        await PromptVersionService.create_version(prompt)
+
+        # Prepare updated fields
         data = update_data.model_dump(exclude_unset=True)
 
+        # Increment version
+        data["version"] = prompt["version"] + 1
+
+        # Update timestamp
+        data["updated_at"] = datetime.utcnow()
+
+        # Update the live prompt
         await PromptRepository.update_prompt(
             prompt_id,
             data,
