@@ -15,3 +15,7 @@ def prompts_collection():
 
 def prompt_versions_collection():
     return mongodb.db["prompt_versions"]
+
+
+def prompt_evaluations_collection():
+    return mongodb.db["prompt_evaluations"]
