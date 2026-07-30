@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.core.dependencies import get_current_user
-from app.schemas.prompt_evaluation import PromptEvaluationCreate
 from app.services.prompt_evaluation_service import PromptEvaluationService
 from app.services.prompt_service import PromptService
 
@@ -17,7 +16,6 @@ router = APIRouter(
 )
 async def create_evaluation(
     prompt_id: str,
-    evaluation: PromptEvaluationCreate,
     current_user=Depends(get_current_user),
 ):
     prompt = await PromptService.get_prompt(prompt_id)
@@ -36,7 +34,6 @@ async def create_evaluation(
 
     evaluation_id = await PromptEvaluationService.create_evaluation(
         prompt_id,
-        evaluation,
         current_user,
     )
 
