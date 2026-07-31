@@ -32,6 +32,11 @@ const authService = {
         return response.data;
     },
 
+    async getCurrentUser() {
+        const response = await api.get("/auth/me");
+        return response.data;
+    },
+
     logout() {
         localStorage.removeItem("access_token");
     },
