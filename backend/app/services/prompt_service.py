@@ -2,6 +2,7 @@ from bson import ObjectId
 from datetime import datetime
 
 from app.repositories.prompt_repository import PromptRepository
+from app.services.groq_service import GroqService
 from app.services.prompt_version_service import PromptVersionService
 from app.utils.mongo import serialize_mongo
 
@@ -102,3 +103,24 @@ class PromptService:
 
         # Delete the prompt
         await PromptRepository.delete_prompt(prompt_id)
+
+    @staticmethod
+    async def generate_playground_response(
+        prompt_id: str,
+        user_input: str,
+    ):
+        prompt = await PromptRepository.get_prompt_by_id(prompt_id)
+
+        if not prompt:
+            raise ValueError("Prompt not found")
+
+        groq = GroqService()
+
+        response = await groq.generate_response(
+            prompt=prompt["content"],
+            user_input=user_input,
+        )
+
+        return {
+            "response": response
+        }

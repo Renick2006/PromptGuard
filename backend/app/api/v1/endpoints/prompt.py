@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.core.dependencies import get_current_user
+from app.schemas.playground import PlaygroundRequest
 from app.schemas.prompt import PromptCreate, PromptUpdate
 from app.services.project_service import ProjectService
 from app.services.prompt_service import PromptService
@@ -146,6 +147,32 @@ async def restore_prompt_version(
     return {
         "message": "Prompt restored successfully."
     }
+
+
+@router.post("/{prompt_id}/playground")
+async def playground(
+    prompt_id: str,
+    request: PlaygroundRequest,
+    current_user=Depends(get_current_user),
+):
+    prompt = await PromptService.get_prompt(prompt_id)
+
+    if not prompt:
+        raise HTTPException(
+            status_code=404,
+            detail="Prompt not found.",
+        )
+
+    if str(prompt["owner_id"]) != str(current_user["_id"]):
+        raise HTTPException(
+            status_code=403,
+            detail="You do not own this prompt.",
+        )
+
+    return await PromptService.generate_playground_response(
+        prompt_id=prompt_id,
+        user_input=request.user_input,
+    )
 
 
 @router.delete("/{prompt_id}")

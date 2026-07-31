@@ -95,3 +95,37 @@ Return ONLY the required JSON.
         )
 
         return response.choices[0].message.content
+
+    async def generate_response(
+        self,
+        prompt: str,
+        user_input: str,
+    ) -> str:
+        system_prompt = f"""
+You are an AI assistant.
+
+Use the following prompt as your instruction.
+
+PROMPT:
+
+{prompt}
+
+Always follow the prompt while answering the user's request.
+"""
+
+        response = self.client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            temperature=0.7,
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt,
+                },
+                {
+                    "role": "user",
+                    "content": user_input,
+                },
+            ],
+        )
+
+        return response.choices[0].message.content
