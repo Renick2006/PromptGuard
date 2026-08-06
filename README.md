@@ -1,4 +1,4 @@
-# 🚀 PromptGuard
+# 🤖 PromptGuard
 
 > **An AI-powered platform for prompt management, evaluation,
 > versioning, and testing.**
