@@ -1,50 +1,50 @@
-# 🤖 PromptGuard
+# 🛡️ PromptGuard
 
-> **An AI-powered platform for prompt management, evaluation,
-> versioning, and testing.**
+### AI-Powered Prompt Engineering, Evaluation & Management Platform
 
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi)
-![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb)
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python)
-![Groq](https://img.shields.io/badge/Groq-LLM-orange)
+PromptGuard is a full-stack AI platform designed to help users **create, organize, evaluate, version, and test prompts** using large language models.
 
-## 📖 Overview
+The platform combines prompt management with automated AI evaluation, allowing users to understand the quality of their prompts and experiment with them through an interactive playground.
 
-PromptGuard is a full-stack AI application that helps developers and
-prompt engineers manage, evaluate, version, and test prompts in one
-place.
+## ✨ Features
 
-### Features
+### 🔐 Authentication
+- User registration and login
+- JWT-based authentication
+- Protected application routes
+- Persistent authentication state
+- User-specific project access
 
--   JWT Authentication
--   Project Management
--   Prompt CRUD
--   Prompt Versioning
--   AI Prompt Evaluation
--   Analytics Dashboard
--   Prompt Playground (Groq + Llama 3.3 70B)
+### 📁 Project Management
+- Create and manage projects
+- Organize prompts inside projects
+- View recent projects from the dashboard
+- Project-based prompt organization
 
-## Tech Stack
+### 📝 Prompt Management
+- Create prompts
+- Edit prompts
+- Delete prompts
+- View stored prompts
+- Maintain prompt versions
+- Restore previous prompt versions
 
-### Frontend
+### 🤖 AI Prompt Evaluation
 
--   React
--   Vite
--   Tailwind CSS
--   Axios
--   React Router
--   Recharts
+PromptGuard uses an LLM to evaluate prompt quality based on:
 
-### Backend
+- Quality Score
+- Clarity Score
+- Readability Score
+- Estimated Token Usage
+- Estimated API Cost
+- Strengths
+- Weaknesses
+- Improved Prompt
 
--   FastAPI
--   Python
--   MongoDB
--   Groq API
--   JWT Authentication
+The evaluation system treats the submitted prompt as text to analyze rather than executing the instructions contained inside it.
 
-## Architecture
+## 🏛️ Architecture
 
 ``` text
 React
@@ -61,45 +61,71 @@ MongoDB
   │
 Groq API
 ```
-
-## Installation
-
-### Backend
-
-``` bash
-cd backend
-python -m venv .venv
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
+## 🛠️ Tech Stack
 
 ### Frontend
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- Recharts
+- Lucide React
 
-``` bash
-cd frontend
-npm install
-npm run dev
+### Backend
+- Python
+- FastAPI
+- Uvicorn
+- Pydantic
+- JWT Authentication
+- MongoDB / PyMongo
+- Layered Architecture
+
+### AI
+- Groq API
+- Llama 3.3 70B Versatile
+
+### Database
+- MongoDB Atlas
+
+### Deployment
+- Vercel
+- Render
+
+### Tools
+- Git
+- GitHub
+- VS Code
+- npm
+
+## 🧪 Prompt Playground
+
+Users can test saved prompts against custom inputs.
+
+Example:
+
+```text
+Saved Prompt:
+"You are an expert career assistant..."
+
+Test Input:
+"I am a second-year AI and Data Science student looking for an internship."
+
+PromptGuard then generates an AI response using the saved prompt.
 ```
 
-## Environment Variables
+## 📸 Screenshots
+<img width="1917" height="1087" alt="Screenshot 2026-08-11 110311" src="https://github.com/user-attachments/assets/39145e61-f0b9-48e6-8a21-c13c6d729df1" />
+<img width="1915" height="1091" alt="Screenshot 2026-08-11 105704" src="https://github.com/user-attachments/assets/87604e57-0740-49f2-ba61-05edb9019f5e" />
+<img width="1918" height="1087" alt="Screenshot 2026-08-11 105720" src="https://github.com/user-attachments/assets/9c90b5e9-5737-4527-ad50-0cdeb4363286" />
+<img width="1918" height="1085" alt="Screenshot 2026-08-11 110207" src="https://github.com/user-attachments/assets/05ecad4b-05a6-40f3-91f6-fd1bbb275cb7" />
+<img width="1918" height="1035" alt="Screenshot 2026-08-11 105830" src="https://github.com/user-attachments/assets/223ce6d5-6817-425a-9ae1-48014e03c7ad" />
+<img width="1907" height="1082" alt="image" src="https://github.com/user-attachments/assets/42b08688-fba1-4e5d-950c-a259e4400a5d" />
 
-``` env
-MONGODB_URL=
-SECRET_KEY=
-GROQ_API_KEY=
-```
 
-## Screenshots
 
-Add screenshots for: - Login - Dashboard - Projects - Evaluation -
-Playground - Analytics
 
-## Future Improvements
 
--   Deployment
--   Prompt Templates
--   Team Collaboration
--   Export Reports
 
 ## Author
 
